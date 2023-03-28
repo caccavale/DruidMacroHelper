@@ -10,6 +10,9 @@
 ## X-Wago-ID: R4N2yaGL
 ## DefaultState: enabled
 
+Libs\LibStub\LibStub.lua
+Libs\LibClassicSwingTimerAPI\LibClassicSwingTimerAPI.lua
+
 Locale\enUS.lua
 Locale\deDE.lua
 Locale\esES.lua
