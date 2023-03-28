@@ -145,11 +145,19 @@ function DruidMacroHelper:OnSlashMaul(parameters)
   end
 end
 
-local snake = function()
+function DruidMacroHelper:SnakeHelper(parameters)
   for i=1,GetNumCompanions("CRITTER") do
     if select(2, GetCompanionInfo("CRITTER", i)) == "Albino Snake" then
         CallCompanion("CRITTER", i)
-        break
+
+        if (#(parameters) > 0) then
+          local additional = tremove(parameters, 1);
+          if (additional == "auto") then
+            C_Timer.After(2, function() DismissCompanion("CRITTER") end)
+          end
+        end
+
+        return
     end
   end
 end
@@ -158,12 +166,12 @@ function DruidMacroHelper:OnSlashSnake(parameters)
   if GetCVar("autoUnshift") == "1" then
     if LibClassicSwingTimerAPI == nil then
       self:LogDebug("LibClassicSwingTimerAPI not installed, snaking naively");
-      snake();
+      self:SnakeHelper(parameters);
     else
       local time_till_next_auto = select(2, LibClassicSwingTimerAPI:SwingTimerInfo("mainhand")) - GetTime();
       if time_till_next_auto > (1 / (1 + GetMeleeHaste() / 100)) then
         self:LogDebug("Summoning snake to clip next swing down from", time_till_next_auto);
-        snake();
+        self:SnakeHelper(parameters);
       else
         self:LogDebug("Your swing timer is less than 1, did not snake:", time_till_next_auto);
       end
