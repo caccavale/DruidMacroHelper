@@ -177,6 +177,9 @@ function DruidMacroHelper:OnSlashSnake(parameters)
       end
     end
   end
+  if (#(parameters) > 0) then
+    tremove(parameters, 1);
+  end
 end
 
 function DruidMacroHelper:OnSlashDismiss(parameters)
