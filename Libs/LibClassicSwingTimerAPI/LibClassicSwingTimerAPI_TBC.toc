@@ -1,4 +1,4 @@
-## Interface: 100007
+## Interface: 20504
 ## Version: 2.0.3
 ## Title: Swing Timer API
 ## Notes: Swing Timer Library

@@ -11,6 +11,7 @@
 ## DefaultState: enabled
 
 Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\LibClassicSwingTimerAPI\LibClassicSwingTimerAPI.lua
 
 Locale\enUS.lua
