@@ -4,9 +4,9 @@ local DRUID_MACRO_HELPER_LOC_SHIFTABLE = { "ROOT" };
 local DRUID_MACRO_HELPER_LOC_STUN = { "STUN", "STUN_MECHANIC", "FEAR", "CHARM", "CONFUSE", "POSSESS" };
 local LibClassicSwingTimerAPI = LibStub("LibClassicSwingTimerAPI", true)
 
-DruidMacroHelper = {};
+DruidMacroHelper = LibStub("AceAddon-3.0"):NewAddon("DruidMacroHelper", "AceEvent-3.0");
 
-function DruidMacroHelper:Init()
+function DruidMacroHelper:OnEnable()
   self:RegisterItemShortcut("pot", 13446);
   self:RegisterItemShortcut("potion", 13446);
   self:RegisterItemShortcut("hs", 20520);
@@ -40,8 +40,10 @@ function DruidMacroHelper:Init()
   self:CreateButton('dmhHs', '/dmh cd hs\n/dmh start', 'Disable autoUnshift if not ready to use a healthstone');
   self:CreateButton('dmhSap', '/dmh cd sapper\n/dmh start', 'Disable autoUnshift if not ready to use a sapper');
   self:CreateButton('dmhSuperSap', '/dmh cd supersapper\n/dmh start', 'Disable autoUnshift if not ready to use a super sapper');
+  self:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
   self.ChatThrottle = nil
   self.SpellQueueWindow = 400
+  self.AutoUnsnake = false
 end
 
 function DruidMacroHelper:LogOutput(...)
@@ -145,6 +147,16 @@ function DruidMacroHelper:OnSlashMaul(parameters)
   end
 end
 
+function DruidMacroHelper:UPDATE_SHAPESHIFT_FORM(event)
+  C_Timer.After(.5, function() 
+    if self.AutoUnsnake and GetShapeshiftForm() ~= 3 then
+      self:LogDebug("Auto unsnaked")
+      DismissCompanion("CRITTER")
+      self.AutoUnsnake = false
+    end
+  end)
+end
+
 function DruidMacroHelper:SnakeHelper(parameters)
   for i=1,GetNumCompanions("CRITTER") do
     if select(2, GetCompanionInfo("CRITTER", i)) == "Albino Snake" then
@@ -152,8 +164,10 @@ function DruidMacroHelper:SnakeHelper(parameters)
 
         if (#(parameters) > 0) then
           local additional = tremove(parameters, 1);
-          if (additional == "auto") then
+          if additional == "timed" then
             C_Timer.After(2, function() DismissCompanion("CRITTER") end)
+          elseif additional == "auto" then
+            self.AutoUnsnake = true
           end
         end
 
@@ -428,5 +442,3 @@ function DruidMacroHelper:RegisterSlashCommand(cmd)
   end
 end
 
--- Kickstart the addon
-DruidMacroHelper:Init();

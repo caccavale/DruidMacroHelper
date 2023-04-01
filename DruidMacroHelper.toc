@@ -11,6 +11,8 @@
 ## DefaultState: enabled
 
 Libs\LibStub\LibStub.lua
+Libs\AceAddon-3.0\AceAddon-3.0.xml
+Libs\AceEvent-3.0\AceEvent-3.0.xml
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\LibClassicSwingTimerAPI\LibClassicSwingTimerAPI.lua
 
