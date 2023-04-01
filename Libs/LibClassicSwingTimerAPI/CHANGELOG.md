@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2023-03-31
+
+### Changed
+* Update tocversion support of Retails.
+
+### Fixed
+- Fix lib:UNIT_ATTACK_SPEED function unitGUID param.
+- Fix Druid specific UNIT_ATTACK_SPEED handler. Spells that remove a druid form and reset the swing now correctly update the swing information. 
+- Fix lib:ADDON_LOADED function. Allows lib:ADDON_LOADED to correctly initialize when another addon embeds the library.
+
+## [2.0.1] - 2023-01-18
+
+### Fixed
+- Fix LUA error on SwingEnd method call.
+
+## [2.0.0] - 2023-01-13
+
+### Added
+- Added support for target swing timer info.
+- Added API EVENTS that reflect both player and target support with following format UNIT_SWING_TIMER_.
+- Backward compatibility of previous API EVENTS with SWING_TIMER_ format for player unit.
+- New api method UnitSwingTimerInfo to get swing informations for a specific unit.
+- Added Backward compatibility for SWING_TIMER_INFO_INITIALIZED event
+
+### Changed
+* Update support of Retails to Dragonflight.
+* Bump Wraith version to Ulduar patch.
+
 ## [1.4.2] - 2022-11-02
 
 ### Fixed
